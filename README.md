@@ -1,5 +1,5 @@
 
-# 🏭 Warehouse Automation Agent 🤖
+# 🏭 Logistics & Warehouse Automation Agent 🤖
 
 An interactive cognitive agent built with **Chainlit** and **Gemini API**, designed to optimize warehouse logistics and automation workflows.
 
@@ -71,6 +71,12 @@ Then, you can chat with the agent using natural language!
 
 ## ⚙️ How It Works
 
+### 🔁 Call Flow
+
+```text
+User → chainlit_app → agent → perception → agent → decision → tools → MCP server → tools → decision → agent → chainlit_app
+```
+
 ### 🧠 Perception → 🧾 Decision → ⚙️ Action → 💬 Final Answer
 
 #### 1. Perception: Gemini reads query
@@ -129,12 +135,13 @@ store_memory(MemoryInput(key="user_preferences", value=preferences))
 
 memory_data = get_memory("user_preferences")
 
-system_prompt = f"""You are a logistics and warehouse automation agent specialized in supply chain optimization, inventory control, and efficiency strategies.
-
-        Warehouse: {memory_data.get("warehouse_location", "unknown")}  
-        Daily Shipments: {memory_data.get("shipment_volume", "unknown")}  
-        Automation: {memory_data.get("automation_level", "unknown")}  
-"""
+system_prompt = (
+    "You are a logistics and warehouse automation agent specialized in supply chain optimization, "
+    "inventory control, and efficiency strategies.\n"
+    f"Warehouse: {{memory_data.get('warehouse_location', 'unknown')}}\n"
+    f"Daily Shipments: {{memory_data.get('shipment_volume', 'unknown')}}\n"
+    f"Automation: {{memory_data.get('automation_level', 'unknown')}}"
+)
 ```
 
 ---
@@ -216,3 +223,23 @@ See [requirements.txt](./requirements.txt) for full list.
 ## 👨‍💻 Author
 
 Built with ❤️ by your AI assistant and the power of Gemini + Chainlit.
+
+---
+
+## 📸 Prompt Testing Snapshot
+
+Below is a structured review screenshot from the latest prompt test:
+
+![Prompt Test Review](./Screenshot from 2025-04-19 02-51-56.png)
+
+> "Excellent structure. Now includes internal verification and reasoning."
+
+This confirms the agent prompt supports:
+- ✅ Explicit reasoning
+- ✅ Structured output
+- ✅ Tool separation
+- ✅ Conversation loop
+- ✅ Instructional framing
+- ✅ Internal self-checks
+- ✅ Reasoning type awareness
+- ✅ Fallbacks
