@@ -2,7 +2,7 @@
 
 import chainlit as cl
 import os
-from main import main
+from agent import main
 
 @cl.on_chat_start
 async def on_chat_start():
