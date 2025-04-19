@@ -20,7 +20,7 @@ An interactive cognitive agent built with **Chainlit** and **Gemini API**, desig
 
 ```bash
 .
-├── action.py               # Executes tools via MCP server
+├── action.py               # Executes tools via MCP client interface
 ├── agent.py                # Core logic for perception, decision, and action loop
 ├── chainlit_app.py         # Chainlit interface and session management
 ├── config.py               # LLM configuration
@@ -102,24 +102,29 @@ if text.startswith("FUNCTION_CALL:"):
 
 ---
 
-#### 3. Action: Runs MCP Tool
+#### 3. Action: Runs MCP Tool via Client
 
 ```python
 # action.py
 async def call_mcp_tool(tool_name: str, arguments: dict) -> str:
-    ...
-    result = await session.call_tool(tool_name, arguments)
-    return str(result.content if hasattr(result, 'content') else result)
+    server_params = StdioServerParameters(
+        command="python",
+        args=["mcp_server.py", "--env-key", os.getenv("GEMINI_API_KEY")]
+    )
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            result = await session.call_tool(tool_name, arguments)
+            return str(result.content if hasattr(result, 'content') else result)
 ```
 
 ---
 
-## 🧠 Memory-Based System Prompt (Updated)
+## 🧠 Memory-Based System Prompt
 
-The `agent.py` file now retrieves user preferences from memory to construct the system prompt dynamically:
+The `agent.py` file retrieves user preferences from memory to construct the system prompt:
 
 ```python
-# agent.py
 store_memory(MemoryInput(key="user_preferences", value=preferences))
 
 memory_data = get_memory("user_preferences")
@@ -132,7 +137,29 @@ system_prompt = f"""You are a logistics and warehouse automation agent specializ
 """
 ```
 
-This ensures consistent reuse of stored values throughout the session.
+---
+
+## 🧠 MCP Server (Tool Logic)
+
+The MCP server defines tools that can be invoked remotely via `call_tool`.
+
+```python
+@mcp.tool()
+async def suggest_kpis() -> dict:
+    prompt = "Suggest 5 key performance indicators (KPIs) for warehouse and logistics operations."
+    result = await call_llm(prompt)
+    return {"content": [TextContent(type="text", text=result)]}
+```
+
+To run the server via stdio:
+
+```python
+# mcp_server.py
+if __name__ == "__main__":
+    mcp.run(transport="stdio")
+```
+
+Each tool is built using step-by-step reasoning with the Gemini model.
 
 ---
 
