@@ -251,10 +251,10 @@ Built with ❤️ by your AI assistant and the power of Gemini + Chainlit.
 
 ### 📌 Prompt Testing Snapshot
 
-![Prompt Test Review](./Screenshot from 2025-04-19 02-51-56.png)
+![Prompt Test Review](./prompt_test_passed.png)
 
 > "Excellent structure. Now includes internal verification and reasoning."
 
 ### 🖼️ Application Screenshot
 
-![App Screenshot](./Screenshot from 2025-04-20 23-00-25.png)
+![App Screenshot](./application_screenshot.png)
