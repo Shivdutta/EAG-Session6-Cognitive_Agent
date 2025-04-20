@@ -1,5 +1,35 @@
+## 🧠 What is a Cognitive Agent?
 
-# 🏭 Logistics & Warehouse Automation Agent 🤖
+A cognitive agent is an intelligent software (or robotic) system designed to mimic aspects of human cognition—like perception, memory, reasoning, learning, planning, and decision-making—in order to operate autonomously in complex environments.
+
+### ✨ Key Features of a Cognitive Agent:
+
+- **👁️ Perception**  
+  Gathers data from the environment (e.g., through sensors, APIs, or user input) and interprets it.
+
+- **🧠 Memory**  
+  Stores knowledge, past experiences, or learned patterns to support future decisions.
+
+- **🧩 Reasoning / Decision-Making**  
+  Chooses actions based on goals, current perceptions, and past knowledge. Can involve rule-based logic, planning algorithms, or learned behaviors.
+
+- **📚 Learning**  
+  Improves over time through interaction with its environment—using methods like reinforcement learning, supervised learning, or symbolic updates.
+
+- **🤖 Action**  
+  Executes tasks or affects its environment through outputs, actuators, or commands.
+
+### 💡 Example Use Cases:
+
+- 🗣️ Personal assistants like Siri or Alexa
+- 🏭 Warehouse/logistics agents that plan forklift training or manage stock
+- 🎮 Game AIs that adapt to player strategies
+- 🚜 Autonomous robots navigating unpredictable terrain
+- 💬 Customer support bots that improve through interaction
+
+---
+
+# 🏢 Logistics & Warehouse Automation Agent 🤖
 
 An interactive cognitive agent built with **Chainlit** and **Gemini API**, designed to optimize warehouse logistics and automation workflows.
 
@@ -18,7 +48,7 @@ An interactive cognitive agent built with **Chainlit** and **Gemini API**, desig
 
 ## 📁 Project Structure
 
-```bash
+```
 .
 ├── action.py               # Executes tools via MCP client interface
 ├── agent.py                # Core logic for perception, decision, and action loop
@@ -137,18 +167,19 @@ memory_data = get_memory("user_preferences")
 
 system_prompt = (
     "You are a logistics and warehouse automation agent specialized in supply chain optimization, "
-    "inventory control, and efficiency strategies.\n"
-    f"Warehouse: {{memory_data.get('warehouse_location', 'unknown')}}\n"
-    f"Daily Shipments: {{memory_data.get('shipment_volume', 'unknown')}}\n"
-    f"Automation: {{memory_data.get('automation_level', 'unknown')}}"
+    "inventory control, and efficiency strategies.
+"
+    f"Warehouse: {memory_data.get('warehouse_location', 'unknown')}
+"
+    f"Daily Shipments: {memory_data.get('shipment_volume', 'unknown')}
+"
+    f"Automation: {memory_data.get('automation_level', 'unknown')}"
 )
 ```
 
 ---
 
-## 🧠 MCP Server (Tool Logic)
-
-The MCP server defines tools that can be invoked remotely via `call_tool`.
+## 🧰 MCP Server (Tool Logic)
 
 ```python
 @mcp.tool()
@@ -165,8 +196,6 @@ To run the server via stdio:
 if __name__ == "__main__":
     mcp.run(transport="stdio")
 ```
-
-Each tool is built using step-by-step reasoning with the Gemini model.
 
 ---
 
@@ -186,29 +215,21 @@ Each tool is built using step-by-step reasoning with the Gemini model.
 
 > *"How can I optimize the receiving process for a medium automation warehouse in Chicago?"*
 
-The agent will:
-1. Perceive the prompt.
-2. Suggest a tool like `receiving_process_improvement()`.
-3. Use Gemini to run the tool logic.
-4. Return a well-reasoned answer.
-
 ---
 
 ## 🛡️ Environment Configuration
 
-Ensure your `.env` or environment variable contains your Gemini API Key:
+Set up your `.env` or environment variable:
 
 ```env
 GEMINI_API_KEY=your_api_key_here
 ```
 
-Alternatively, Chainlit UI asks for it on startup.
-
 ---
 
 ## 📦 Dependencies
 
-See [requirements.txt](./requirements.txt) for full list.
+See [`requirements.txt`](./requirements.txt) for full list.
 
 ---
 
@@ -226,20 +247,14 @@ Built with ❤️ by your AI assistant and the power of Gemini + Chainlit.
 
 ---
 
-## 📸 Prompt Testing Snapshot
+## 📸 Screenshots
 
-Below is a structured review screenshot from the latest prompt test:
+### 📌 Prompt Testing Snapshot
 
 ![Prompt Test Review](./Screenshot from 2025-04-19 02-51-56.png)
 
 > "Excellent structure. Now includes internal verification and reasoning."
 
-This confirms the agent prompt supports:
-- ✅ Explicit reasoning
-- ✅ Structured output
-- ✅ Tool separation
-- ✅ Conversation loop
-- ✅ Instructional framing
-- ✅ Internal self-checks
-- ✅ Reasoning type awareness
-- ✅ Fallbacks
+### 🖼️ Application Screenshot
+
+![App Screenshot](./Screenshot from 2025-04-20 23-00-25.png)
